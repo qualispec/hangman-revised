@@ -1,7 +1,16 @@
 class Hangman
 
   def initialize
+    @word = ""
+    @dictionary_array = dictionary_array
+  end
 
+  def dictionary_array
+    dictionary = []
+    File.foreach("dictionary.txt") do |line|
+      dictionary << line
+    end
+    dictionary
   end
 
   def game_loop
@@ -62,6 +71,8 @@ end
 
 class ComputerPlayer < Player
 
+  def choose_word
 
+  end
 
 end
