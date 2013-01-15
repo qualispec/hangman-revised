@@ -28,7 +28,8 @@ class Hangman
       end
       show_board
     end
-
+    puts "You've won!"
+    puts "The word was #{@game_board.join("")}"
   end
 
   def game_won?
