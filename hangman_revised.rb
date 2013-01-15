@@ -6,7 +6,7 @@ class Hangman
     @word = ""
     @dictionary_array = dictionary_array
     @game_board = []
-    @game_mode = "human guess"
+    @game_mode = ""
   end
 
   def dictionary_array
@@ -18,10 +18,15 @@ class Hangman
   end
 
   def game_loop
-
+    game_mode
+    choose_word
+    blank_game_board(@word)
     until game_won?
-
-
+      guess = human_guess
+      if take_guess(guess)
+        place_letters(guess)
+      end
+      show_board
     end
 
   end
@@ -36,10 +41,10 @@ class Hangman
     case command
     when "1"
       @game_mode = "computer guess"
-      play_choosing_game
+      # play_choosing_game
     when "2"
       @game_mode = "human guess"
-      play_guessing_game
+      # play_guessing_game
     else
       puts "invalid entry, choose 1 or 2"
       game_mode
@@ -47,19 +52,19 @@ class Hangman
   end
 
   # def play_choosing_game
-  #   player chooses word
-  #   store word
-  #   create board
-  #   evaluate guess
-  #   change board
+  #   player chooses word v
+  #   store word v
+  #   create board v
+  #   evaluate guess v
+  #   change board v
   #   store/show guesses
   #   store attempts
   # end
 
   # def play_guessing_game
-  #   choose word
-  #   store word
-  #   create board
+  #   choose word v
+  #   store word v
+  #   create board v
   #   prompt user
   #   evaluate guess v
   #   change board v
@@ -70,10 +75,31 @@ class Hangman
   def choose_word
     case @game_mode
     when "computer guess"
-      @word = computer_guess
-    when "human guess"
       puts "Choose a word! (It must be in the dictionary)"
       @word = gets.chomp
+    when "human guess"
+      @word = computer_guess
+    end
+  end
+
+  def take_guess(letter)
+    if guess_correct?(letter)
+      puts "correct guess!"
+      true
+    else
+      puts "incorrect guess!"
+      false
+    end
+  end
+
+  def human_guess
+    puts "Make a guess!"
+    guess = gets.chomp
+    if guess.class != String && guess.length != 1
+      puts "Invalid entry! Try again."
+      human_guess
+    else
+      guess
     end
   end
 
@@ -96,17 +122,17 @@ class Hangman
     # game_board
   end
 
-  def self.blank_game_board(word)
+  def blank_game_board(word)
     word_length = word.length
     game_board = []
     word_length.times do
       game_board << "_"
     end
-    game_board
+    @game_board = game_board
   end
 
   # Interface stuff
-  def self.show_board
+  def show_board
     puts "here is your game board"
     puts @game_board.join(" ")
   end
@@ -137,4 +163,4 @@ end
 game = Hangman.new
 # p game.dictionary_array
 
-p game.choose_word
+p game.game_loop
