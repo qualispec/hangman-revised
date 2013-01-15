@@ -73,8 +73,8 @@ class Hangman
   #   store attempts
   # end
 
-  def choose_word
-    case @game_mode
+  def choose_word           #Vincent - what the "when"s execute should probably be calls to methods of the same name
+    case @game_mode           # that reside in the HumanPlayer and ComputerPlayer classes.
     when "computer guess"
       puts "Choose a word! (It must be in the dictionary)"
       @word = gets.chomp
@@ -83,9 +83,9 @@ class Hangman
     end
   end
 
-  def take_guess(letter)
-    if guess_correct?(letter)
-      puts "correct guess!"
+  def take_guess(letter)    #Vincent - I'm not sure that you want the Hangman class to ever know what the secret word is.
+    if guess_correct?(letter)   # You could have each respective HumanPlayer and ComputerPlayer classes check the guess
+      puts "correct guess!"     # and tell the Hangman class how to update the board.
       true
     else
       puts "incorrect guess!"
@@ -93,7 +93,7 @@ class Hangman
     end
   end
 
-  def human_guess
+  def human_guess         #Vincent - human_guess should be a method in HumanPlayer just called "guess".
     puts "Make a guess!"
     guess = gets.chomp
     if guess.class != String && guess.length != 1
@@ -104,8 +104,8 @@ class Hangman
     end
   end
 
-  def computer_guess
-    @dictionary_array.sample
+  def computer_guess      #Vincent - computer_guess should be a method in ComputerPlayer just called "guess".
+    @dictionary_array.sample  # The game mode should dictate whether the HumanPlayer or ComputerPlayer "guess" methods are called.
   end
 
   def guess_correct?(letter)
