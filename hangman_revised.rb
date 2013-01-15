@@ -1,3 +1,4 @@
+#boop
 class Hangman
 
   attr_accessor :word, :dictionary_array
